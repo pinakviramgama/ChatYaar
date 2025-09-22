@@ -3,6 +3,7 @@ import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
 import fetch from "node-fetch";
+import chatRoutes from "./routes/chats.js";
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
 const app = express();
@@ -63,6 +64,8 @@ app.post("/chat", async (req, res) => {
     res.status(500).json({ error: "Failed to get chatbot response" });
   }
 });
+
+app.use("/api", chatRoutes);
 
 const connectDB = async () => {
   try {
