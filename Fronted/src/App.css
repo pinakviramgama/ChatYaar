@@ -1,0 +1,6 @@
+.main {
+    color: #ececec;
+    display: flex;
+    flex-direction: row;  /* Sidebar left + ChatWindow right */
+    background-color: #121212;
+}
