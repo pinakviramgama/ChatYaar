@@ -9,7 +9,8 @@ function ChatWindow() {
         prompt, setPrompt,
         reply, setReply,
         currThreadId,
-        prevChats, setPrevChats
+        prevChats, setPrevChats,
+        newChat,setNewChat,
     } = useContext(MyContext);
 
     const [loading, setLoading] = useState(false);
@@ -25,7 +26,8 @@ function ChatWindow() {
         inputRef.current?.focus();
     }, [prevChats]);
 
-const getReply = async () => {
+    const getReply = async () => {
+        setNewChat(false);
     if (!prompt.trim()) return;
 
     let threadId = currThreadId;
@@ -49,7 +51,7 @@ const getReply = async () => {
     setLoading(true);
 
     try {
-        const response = await fetch("http://localhost:3000/chat", {
+        const response = await fetch("http://localhost:3000/api/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ message: prompt, threadId }),
@@ -73,6 +75,10 @@ const getReply = async () => {
                     <i className="fa-solid fa-user"></i>
                 </div>
             </div>
+
+            {
+                newChat ? <h1>START A NEW CHAT!</h1> : ""
+            }
 
             <Chat />
             <SyncLoader className="loader" color="white" loading={loading} />

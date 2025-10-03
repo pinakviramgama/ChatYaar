@@ -77,3 +77,33 @@ button:hover {
     color: white;
     border-top: solid 0.25px rgba(255, 255, 255, 0.5);
 }
+
+.history {
+  /* Remove bullet points */
+  padding: 0;
+  margin: 0;
+overflow-y: scroll;
+scrollbar-width: none;
+}
+
+.history li {
+  display: flex;
+  justify-content: space-between;   /* Push title left, icon right */
+  align-items: center;
+}
+
+.fa-trash {
+    opacity: 0;
+}
+
+.history li:hover .fa-trash {
+    opacity: 1;
+}
+
+.history i {
+  cursor: pointer;
+}
+
+.history i:hover {
+    color: red;
+}

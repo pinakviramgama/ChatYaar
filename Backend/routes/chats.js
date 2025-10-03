@@ -43,8 +43,8 @@ router.get("/thread/:threadId", async (req, res) => {
 });
 
 //delete thread by it's ID
-router.delete("/thread/delete", async (req, res) => {
-  const { threadId } = req.body;
+router.delete("/thread/:threadId/delete", async (req, res) => {
+  const { threadId } = req.params;
 
   try {
     const deletedThread = await Thread.findOneAndDelete({ threadId });
@@ -54,7 +54,9 @@ router.delete("/thread/delete", async (req, res) => {
     }
 
     res.status(200).json({ success: "Thread Deleted Successfully" });
-  } catch (err) {}
+  } catch (err) {
+    console.log(err.message);
+  }
 });
 
 router.post("/chat", async (req, res) => {
