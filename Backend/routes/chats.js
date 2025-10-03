@@ -1,9 +1,9 @@
 import express from "express";
+import { v4 as uuidv4 } from "uuid";
 import Thread from "../models/Thread.js";
 import getChatbotResponse from "../utils/openai.js";
 const router = express();
 
-//Testing route for chat
 router.post("/test", async (req, res) => {
   const { message } = req.body;
   if (!message) return res.status(400).json({ error: "Message is required" });
@@ -57,25 +57,31 @@ router.delete("/thread/delete", async (req, res) => {
   } catch (err) {}
 });
 
-// store chats when user is chating
 router.post("/chat", async (req, res) => {
-  const { threadId, message } = req.body;
+  let { threadId, message } = req.body;
 
-  if (!threadId || !message) {
-    return res.status(400).json({ error: "message not found" });
+  // If threadId not provided, create one (for new chat from frontend)
+  if (!threadId) {
+    threadId = uuidv4();
   }
 
   try {
     let thread = await Thread.findOne({ threadId });
 
     if (!thread) {
+      console.log("triggered");
+
       thread = new Thread({
         threadId,
-        title: message,
+        title: message, // or customize for better titles
         messages: [{ role: "user", content: message }],
+        updatedAt: new Date(),
       });
     } else {
+      console.log("not");
+
       thread.messages.push({ role: "user", content: message });
+      thread.updatedAt = new Date();
     }
 
     const assistantReply = await getChatbotResponse(message);
@@ -83,10 +89,10 @@ router.post("/chat", async (req, res) => {
     thread.messages.push({ role: "assistant", content: assistantReply });
     thread.updatedAt = new Date();
     await thread.save();
-    res.json({ reply: assistantReply });
+    res.json({ reply: assistantReply, threadId: thread.threadId }); // Echo back threadId for frontend state
   } catch (err) {
-    console.log(err.message);
-    res.status(400).json({ message: err.message });
+    console.error("Failed chat save:", err.message);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

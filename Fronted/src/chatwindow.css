@@ -1,0 +1,121 @@
+.chatwindow {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: rgb(39, 38, 38);
+    position: relative;
+    margin-left: 320px;
+    height: 100vh;
+
+}
+
+.chatInput {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  margin-top: 450px;
+  background-color: rgb(39, 38, 38);
+  max-width: 1700px;
+}
+
+
+.userInput {
+  width: 750px;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(39, 38, 38);
+}
+
+.userInput #submit {
+    height: 32px;
+    width: 32px;
+    display: flex;           /* use flex to center content */
+    align-items: center;     /* vertical center */
+    justify-content: center; /* horizontal center */
+    padding: 0;              /* remove default padding */
+    border: none;            /* optional: remove border */
+    background-color: white; /* example color */
+    border-radius: 50%;      /* optional: make it circular */
+}
+
+.userInput #submit {
+    left: -41px;
+    position: relative;
+    top: 7px; /* push it 4px lower; increase value to move more down */
+    height: 35px;
+    width: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+
+.userInput #submit i {
+    margin: 0;               /* no manual shifting needed */
+    font-size: 16px;         /* adjust icon size */
+}
+
+.userInput input {
+  width: 100%;
+  height: 23px;
+  border-radius: 17px;
+  padding: 12px;
+  background-color: rgb(63, 63, 63);
+  color: white;
+  font-size: 16px;
+   outline: none;       /* remove focus outline */
+  box-shadow: none;
+}
+
+.navbar {
+    padding: 2px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    background-color: rgb(39, 38, 38);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.navbar .userIconDiv {
+    background-color: blue;
+    align-items: center;
+    height: 35px;
+    width: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center ;
+    gap: 4px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.navbar .userIconDiv i {
+    border-radius: 50%;
+    background-color: blue;
+    font-size: 22px;
+}
+
+span {
+    display: inline-flex;
+    align-items: center;    /* vertically center */
+    gap: 4px;               /* optional spacing between text and icon */
+}
+
+a {
+    color: white;
+}
+
+.loader {
+  position: fixed;      /* stays in place */
+  top: 43%;
+  left: 56%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(39, 38, 38);
+}
