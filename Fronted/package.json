@@ -10,9 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "multer": "^2.0.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-markdown": "^10.1.0",
+    "react-router-dom": "^7.9.5",
     "react-spinners": "^0.17.0",
     "rehype-highlight": "^7.0.2",
     "uuid": "^13.0.0"

@@ -2,98 +2,73 @@ import express from "express";
 import { v4 as uuidv4 } from "uuid";
 import Thread from "../models/Thread.js";
 import getChatbotResponse from "../utils/openai.js";
-const router = express();
+const router = express.Router(); // 🟢 use Router instead of express()
 
-router.post("/test", async (req, res) => {
-  const { message } = req.body;
-  if (!message) return res.status(400).json({ error: "Message is required" });
-
+// Get all threads for a user
+router.get("/thread/:userId", async (req, res) => {
+  const { userId } = req.params;
   try {
-    const reply = await getChatbotResponse(message);
-    res.json({ reply });
-  } catch (err) {
-    res.status(500).json({ error: "Failed to get chatbot response" });
-  }
-});
-
-//get all threads
-router.get("/thread", async (req, res) => {
-  try {
-    const threads = await Thread.find({}).sort({ updatedAt: -1 });
+    const threads = await Thread.find({ userId }).sort({ updatedAt: -1 });
     res.json(threads);
   } catch (err) {
     console.log(err.message);
+    res.status(500).json({ error: "Failed to get threads" });
   }
 });
 
-//get thread by it's ID
-router.get("/thread/:threadId", async (req, res) => {
-  const { threadId } = req.params;
-
+// Get thread by ID
+router.get("/thread/:userId/:threadId", async (req, res) => {
+  const { userId, threadId } = req.params;
   try {
-    const thread = await Thread.findOne({ threadId });
-    if (!thread) {
-      return res.status(404).json({ error: "Thread/Chat not found...!" });
-    }
-
+    const thread = await Thread.findOne({ threadId, userId });
+    if (!thread) return res.status(404).json({ error: "Thread not found" });
     res.json(thread.messages);
   } catch (err) {
-    console.log(err.message);
+    res.status(500).json({ error: "Failed to fetch thread" });
   }
 });
 
-//delete thread by it's ID
-router.delete("/thread/:threadId/delete", async (req, res) => {
-  const { threadId } = req.params;
-
+// Delete thread
+router.delete("/thread/:userId/:threadId/delete", async (req, res) => {
+  const { userId, threadId } = req.params;
   try {
-    const deletedThread = await Thread.findOneAndDelete({ threadId });
-
-    if (!deletedThread) {
-      return res.status(404).json({ message: "Thread Not Found" });
-    }
-
-    res.status(200).json({ success: "Thread Deleted Successfully" });
+    const deleted = await Thread.findOneAndDelete({ threadId, userId });
+    if (!deleted) return res.status(404).json({ message: "Thread not found" });
+    res.json({ success: true });
   } catch (err) {
-    console.log(err.message);
+    res.status(500).json({ error: "Failed to delete thread" });
   }
 });
 
+// Send chat message
 router.post("/chat", async (req, res) => {
-  let { threadId, message } = req.body;
+  let { threadId, message, userId } = req.body;
+  if (!userId) return res.status(400).json({ error: "userId required" });
 
-  // If threadId not provided, create one (for new chat from frontend)
-  if (!threadId) {
-    threadId = uuidv4();
-  }
+  if (!threadId) threadId = uuidv4();
 
   try {
-    let thread = await Thread.findOne({ threadId });
+    let thread = await Thread.findOne({ threadId, userId });
 
     if (!thread) {
-      console.log("triggered");
-
       thread = new Thread({
         threadId,
-        title: message, // or customize for better titles
+        userId,
+        title: message.slice(0, 40),
         messages: [{ role: "user", content: message }],
-        updatedAt: new Date(),
       });
     } else {
-      console.log("not");
-
       thread.messages.push({ role: "user", content: message });
-      thread.updatedAt = new Date();
     }
 
     const assistantReply = await getChatbotResponse(message);
-
     thread.messages.push({ role: "assistant", content: assistantReply });
     thread.updatedAt = new Date();
     await thread.save();
-    res.json({ reply: assistantReply, threadId: thread.threadId }); // Echo back threadId for frontend state
+
+    res.json({ reply: assistantReply, threadId });
   } catch (err) {
-    console.error("Failed chat save:", err.message);
+    console.error("Chat save error:", err.message);
     res.status(500).json({ error: "Internal server error" });
   }
 });

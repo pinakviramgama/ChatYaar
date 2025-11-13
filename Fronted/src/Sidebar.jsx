@@ -15,10 +15,17 @@ function Sidebar() {
     setPrevChats,
   } = useContext(MyContext);
 
-  // Fetch all threads from backend
+  // 🟢 Get the logged-in user from localStorage
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  // Fetch all threads for that user
   const getAllThreads = async () => {
+    if (!user?._id) return; // No user logged in
+
     try {
-      const response = await fetch("http://localhost:3000/api/thread");
+      const response = await fetch(
+        `http://localhost:3000/api/thread/${user._id}`
+      );
       const data = await response.json();
 
       const filteredData = data.map((thread) => ({
@@ -32,9 +39,9 @@ function Sidebar() {
     }
   };
 
-  // Load threads once on mount
   useEffect(() => {
     getAllThreads();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Create a new chat
@@ -52,13 +59,14 @@ function Sidebar() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/thread/${newThreadId}`
+        `http://localhost:3000/api/thread/${user._id}/${newThreadId}`
       );
       const data = await response.json();
-        console.log("Thread data:", data);
 
-        setPrevChats(data);
-        setNewChat(false);
+      console.log("Thread data:", data);
+
+      setPrevChats(data);
+      setNewChat(false);
     } catch (err) {
       console.error("Error fetching thread:", err.message);
     }
@@ -68,7 +76,7 @@ function Sidebar() {
   const deleteThread = async (threadId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/thread/${threadId}/delete`,
+        `http://localhost:3000/api/thread/${user._id}/${threadId}/delete`,
         { method: "DELETE" }
       );
 
@@ -78,9 +86,9 @@ function Sidebar() {
         );
       }
 
-        if (threadId === currThreadId) {
-            createNewChat();
-        }
+      if (threadId === currThreadId) {
+        createNewChat();
+      }
     } catch (err) {
       console.error("Error deleting thread:", err.message);
     }
@@ -105,14 +113,16 @@ function Sidebar() {
         {allthreads?.map((thread, idx) => (
           <li
             key={idx}
-            className="history-item"
+            className={`history-item ${
+              currThreadId === thread.threadId ? "active-thread" : ""
+            }`}
             onClick={() => changeThread(thread.threadId)}
           >
             <span>{thread.title}</span>
             <i
               className="fa-solid fa-trash"
               onClick={(e) => {
-                e.stopPropagation(); // Prevent switching thread
+                e.stopPropagation(); // prevent click overlap
                 deleteThread(thread.threadId);
               }}
             ></i>

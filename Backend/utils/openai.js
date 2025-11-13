@@ -3,6 +3,7 @@ const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
 async function getChatbotResponse(message) {
   try {
+    if (message == "" || message == null) return;
     const response = await fetch(
       "https://openrouter.ai/api/v1/chat/completions",
       {

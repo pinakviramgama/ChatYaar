@@ -8,6 +8,7 @@
     position: relative;
     margin-left: 320px;
     height: 100vh;
+    overflow-y: hidden;
 
 }
 
@@ -100,6 +101,7 @@
     border-radius: 50%;
     background-color: blue;
     font-size: 22px;
+    cursor: pointer;
 }
 
 span {
@@ -118,4 +120,86 @@ a {
   left: 56%;
   transform: translate(-50%, -50%);
   background-color: rgb(39, 38, 38);
+}
+
+.dropDown {
+    position: absolute;
+    margin-top: 55px;
+    margin-right: -1050px;
+    background-color: #323232;
+    box-shadow: rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+.dropDown .dropDownItem {
+    margin: 8px;
+    background-color: #323232;
+}
+
+.dropDown .dropDownItem:hover {
+    color: beige;
+    cursor: pointer;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background-color: #161b22;
+  border-bottom: 1px solid #30363d;
+  color: #f0f6fc;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.username {
+  font-size: 14px;
+  color: #8b949e;
+}
+
+.userIconDiv {
+  cursor: pointer;
+  font-size: 18px;
+  background-color: #21262d;
+  padding: 8px 10px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.userIconDiv:hover {
+  background-color: #30363d;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0d1117;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%; /* 🧠 subtract sidebar width */
+  margin-left: 10px; /* 🧠 align perfectly with sidebar */
+  box-sizing: border-box;
+}
+
+.chatwindow {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: rgb(39, 38, 38);
+    position: relative;
+    margin-left: 320px;
+    height: 100vh;
+    overflow: hidden; /* 🚫 disables both x and y scroll */
 }

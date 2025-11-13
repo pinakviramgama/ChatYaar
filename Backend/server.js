@@ -4,6 +4,7 @@ import express from "express";
 import mongoose from "mongoose";
 import fetch from "node-fetch";
 import chatRoutes from "./routes/chats.js";
+import authRoutes from "./routes/user.js";
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
 const app = express();
@@ -66,6 +67,7 @@ app.post("/chat", async (req, res) => {
 });
 
 app.use("/api", chatRoutes);
+app.use("/api/auth", authRoutes);
 
 const connectDB = async () => {
   try {
