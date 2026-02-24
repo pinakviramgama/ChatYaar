@@ -8,12 +8,14 @@ import { fileURLToPath } from "url";
 import chatRoutes from "./routes/chats.js";
 import authRoutes from "./routes/user.js";
 
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
-
 const app = express();
 const PORT = process.env.PORT || 3000;
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
+// -------------------- MIDDLEWARE --------------------
 app.use(express.json());
+
+// If frontend + backend same domain, CORS not really needed
 app.use(cors());
 
 // -------------------- CHAT FUNCTION --------------------
@@ -36,22 +38,19 @@ async function getChatbotResponse(message) {
 
     const data = await response.json();
 
-    if (data.error) {
+    if (data?.error) {
+      console.error("API Error:", data.error);
       return `API Error: ${data.error.message}`;
     }
 
-    if (!data.choices || data.choices.length === 0) {
-      return "No response from API.";
-    }
-
-    return data.choices[0].message.content;
+    return data?.choices?.[0]?.message?.content || "No response from API.";
   } catch (err) {
     console.error("Fetch Error:", err);
     return "Failed to get response from API.";
   }
 }
 
-// -------------------- ROUTES --------------------
+// -------------------- API ROUTES --------------------
 app.post("/chat", async (req, res) => {
   const { message } = req.body;
   if (!message) return res.status(400).json({ error: "Message is required" });
@@ -67,26 +66,31 @@ app.use("/api/auth", authRoutes);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// IMPORTANT: Because Root Directory = Backend
+// frontend is one level up
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  const frontendPath = path.join(__dirname, "../frontend/dist");
+
+  app.use(express.static(frontendPath));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"));
+    res.sendFile(path.join(frontendPath, "index.html"));
   });
 }
 
-// -------------------- DB CONNECTION --------------------
-const connectDB = async () => {
+// -------------------- DATABASE --------------------
+async function connectDB() {
   try {
     await mongoose.connect(process.env.MONGO_URL);
-    console.log("Connected to DB");
+    console.log("✅ Connected to MongoDB");
   } catch (err) {
-    console.log("Failed to connect with DB", err);
+    console.error("❌ MongoDB connection failed:", err);
+    process.exit(1);
   }
-};
+}
 
 // -------------------- START SERVER --------------------
 app.listen(PORT, async () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
   await connectDB();
 });
