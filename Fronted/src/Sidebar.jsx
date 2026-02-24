@@ -3,7 +3,7 @@ import { v1 as uuidv1 } from "uuid";
 import { MyContext } from "./MyContext";
 import "./sidebar.css";
 
-function Sidebar() {
+function Sidebar({ className }) {
   const {
     allthreads,
     setAllThreads,
@@ -16,17 +16,13 @@ function Sidebar() {
   } = useContext(MyContext);
 
   const API = import.meta.env.VITE_API_URL;
-  // 🟢 Get the logged-in user from localStorage
   const user = JSON.parse(localStorage.getItem("user"));
 
-  // Fetch all threads for that user
   const getAllThreads = async () => {
-    if (!user?._id) return; // No user logged in
+    if (!user?._id) return;
 
     try {
-      const response = await fetch(
-        `${API}/api/thread/${user._id}`
-      );
+      const response = await fetch(`${API}/api/thread/${user._id}`);
       const data = await response.json();
 
       const filteredData = data.map((thread) => ({
@@ -36,16 +32,14 @@ function Sidebar() {
 
       setAllThreads(filteredData);
     } catch (err) {
-      console.error("Error fetching threads:", err.message);
+      console.error(err.message);
     }
   };
 
   useEffect(() => {
     getAllThreads();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Create a new chat
   const createNewChat = () => {
     setNewChat(true);
     setPrompt("");
@@ -54,49 +48,36 @@ function Sidebar() {
     setPrevChats([]);
   };
 
-  // Switch to a different thread
   const changeThread = async (newThreadId) => {
     setCurrThreadId(newThreadId);
-
     try {
-      const response = await fetch(
-        `${API}/api/thread/${user._id}/${newThreadId}`
-      );
+      const response = await fetch(`${API}/api/thread/${user._id}/${newThreadId}`);
       const data = await response.json();
-
-      console.log("Thread data:", data);
-
       setPrevChats(data);
       setNewChat(false);
     } catch (err) {
-      console.error("Error fetching thread:", err.message);
+      console.error(err.message);
     }
   };
 
-  // Delete a thread
   const deleteThread = async (threadId) => {
     try {
-      const response = await fetch(
-        `${API}/api/thread/${user._id}/${threadId}/delete`,
-        { method: "DELETE" }
-      );
+      const response = await fetch(`${API}/api/thread/${user._id}/${threadId}/delete`, {
+        method: "DELETE",
+      });
 
       if (response.ok) {
-        setAllThreads((prev) =>
-          prev.filter((thread) => thread.threadId !== threadId)
-        );
+        setAllThreads((prev) => prev.filter((t) => t.threadId !== threadId));
       }
 
-      if (threadId === currThreadId) {
-        createNewChat();
-      }
+      if (threadId === currThreadId) createNewChat();
     } catch (err) {
-      console.error("Error deleting thread:", err.message);
+      console.error(err.message);
     }
   };
 
   return (
-    <section className="sidebar">
+    <section className={`sidebar ${className || ""}`}>
       <button className="new-chat-button" onClick={createNewChat}>
         <img
           className="logo"
@@ -108,25 +89,20 @@ function Sidebar() {
         </span>
       </button>
 
-      <br />
       <h4>Chat History</h4>
-
       <ul className="history">
-
         {allthreads.length === 0 && <li>No Chats yet!</li>}
         {allthreads?.map((thread, idx) => (
           <li
             key={idx}
-            className={`history-item ${
-              currThreadId === thread.threadId ? "active-thread" : ""
-            }`}
+            className={`history-item ${currThreadId === thread.threadId ? "active-thread" : ""}`}
             onClick={() => changeThread(thread.threadId)}
           >
             <span>{thread.title}</span>
             <i
               className="fa-solid fa-trash"
               onClick={(e) => {
-                e.stopPropagation(); // prevent click overlap
+                e.stopPropagation();
                 deleteThread(thread.threadId);
               }}
             ></i>

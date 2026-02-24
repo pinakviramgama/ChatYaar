@@ -127,3 +127,148 @@
 .right-panel input::placeholder {
   color: #888;
 }
+
+/* Base (mobile-first) */
+.signup-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f6f9;
+  padding: 20px; /* prevent edge collision */
+}
+
+.signup-container {
+  width: 100%;
+  max-width: 400px; /* neat card size on mobile */
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column; /* stack panels vertically */
+  overflow: hidden;
+}
+
+/* Left panel (intro text) */
+.left-panel {
+  background: #111827;
+  color: white;
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.left-panel h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.left-panel p {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* Right panel (form) */
+.right-panel {
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-panel h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.right-panel form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.right-panel input {
+  margin-bottom: 15px;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  color: #000;              /* force black text */
+  background-color: #fff;   /* force white background */
+}
+
+.right-panel input::placeholder {
+  color: #888;
+}
+
+.right-panel button {
+  padding: 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: auto; /* ensures button stays visible */
+}
+
+.right-panel button:hover {
+  background: #1e4ed8;
+}
+
+.signin-link {
+  margin-top: 15px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.signin-link a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.signin-link a:hover {
+  text-decoration: underline;
+}
+
+.error-box {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+/* Desktop overrides */
+@media (min-width: 768px) {
+  .signup-container {
+    flex-direction: row; /* side by side */
+    max-width: 900px;
+    height: 550px;
+  }
+
+  .left-panel,
+  .right-panel {
+    flex: 1;
+    padding: 60px;
+    text-align: left;
+  }
+
+  .left-panel h1 {
+    font-size: 36px;
+  }
+
+  .left-panel p {
+    font-size: 16px;
+  }
+
+  .right-panel h2 {
+    font-size: 26px;
+    text-align: left;
+  }
+
+  .right-panel input {
+    font-size: 16px;
+  }
+}

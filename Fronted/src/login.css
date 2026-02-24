@@ -117,3 +117,144 @@
   margin-bottom: 15px;
   font-size: 14px;
 }
+
+/* Mobile-first base */
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f6f9;
+  padding: 20px; /* prevent edge collision */
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px; /* keep it neat on phones */
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column; /* stack by default */
+}
+
+/* Panels stack vertically on mobile */
+.left-panel {
+  background: #111827;
+  color: white;
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.left-panel h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.left-panel p {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.right-panel {
+  padding: 30px 20px;
+}
+
+.right-panel h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.right-panel form {
+  display: flex;
+  flex-direction: column;
+}
+
+.right-panel input,
+.right-panel button {
+  margin-bottom: 15px;
+  padding: 12px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+/* Desktop overrides */
+@media (min-width: 768px) {
+  .login-container {
+    flex-direction: row; /* side by side */
+    max-width: 900px;
+    height: 550px;
+  }
+
+  .left-panel,
+  .right-panel {
+    flex: 1;
+    padding: 60px;
+    text-align: left;
+  }
+
+  .left-panel h1 {
+    font-size: 36px;
+  }
+
+  .right-panel h2 {
+    font-size: 26px;
+    text-align: left;
+  }
+}
+
+/* Mobile-first adjustments */
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  height: auto; /* allow natural height */
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.right-panel {
+  padding: 20px; /* smaller padding on mobile */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* avoid pushing button off */
+}
+
+.right-panel form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* let form expand */
+}
+
+.right-panel input,
+.right-panel button {
+  margin-bottom: 15px;
+  padding: 12px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+/* Ensure button is visible */
+.right-panel button {
+  align-self: stretch; /* full width */
+  margin-top: auto; /* push button down but keep inside */
+}
+
+/* Desktop overrides */
+@media (min-width: 768px) {
+  .login-container {
+    flex-direction: row;
+    max-width: 900px;
+    height: 550px;
+  }
+
+  .right-panel {
+    padding: 60px;
+    justify-content: center;
+  }
+}

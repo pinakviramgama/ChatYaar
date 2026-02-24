@@ -83,8 +83,10 @@ function Signup() {
           <p className="signin-link">
             Already have an account? <Link to="/login">Sign in</Link>
           </p>
+          <br /> <br />
         </div>
       </div>
+      <br /> <br /> <br />
     </div>
   );
 }

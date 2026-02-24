@@ -77,3 +77,162 @@ button:hover {
   color: white;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+  width: 300px;
+  min-width: 250px; /* allow slight shrink */
+  height: 100vh;
+  background-color: #171717;
+  color: #b4b4b4;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid #30363d;
+}
+
+/* Active thread highlight */
+.activeThread {
+  background-color: #444;
+  font-weight: bold;
+}
+
+/* Buttons */
+.sidebar button {
+  height: 45px;
+  margin: 6px;
+  border-radius: 9px;
+  border: 1px solid #444;
+  background-color: #171717;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+.sidebar button:hover {
+  background-color: rgba(64, 64, 66, 0.8);
+  cursor: pointer;
+}
+
+/* Logo */
+.logo {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin-left: 5px;
+  object-fit: cover;
+}
+
+/* History list */
+.history {
+  padding: 10px;
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+.history::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.history li {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.history li:hover {
+  background-color: rgba(111, 111, 111, 0.8);
+  color: white;
+}
+
+.fa-trash {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.history li:hover .fa-trash {
+  opacity: 1;
+}
+
+/* Footer sign-out/info */
+.sign {
+  padding: 15px;
+  text-align: center;
+  font-size: 14px;
+  color: white;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 220px; /* narrower sidebar */
+    min-width: 200px;
+  }
+
+  .sidebar button {
+    font-size: 13px;
+    padding: 5px 10px;
+  }
+
+  .history li {
+    font-size: 13px;
+    padding: 6px;
+  }
+
+  .sign {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    position: absolute;
+    left: -220px; /* hidden by default */
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+
+  .sidebar.open {
+    left: 0; /* slide in */
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;           /* Width of sidebar */
+    height: 100%;
+    background: #111;        /* Your sidebar background */
+    color: white;
+    z-index: 1001;           /* Above overlay */
+    transform: translateX(-100%);  /* Initially hidden */
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+  }
+
+  /* When sidebarOpen is true, add a class to slide it in */
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000; /* Below sidebar */
+  }
+}

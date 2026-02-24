@@ -250,3 +250,302 @@ h1 {
 .dropdown-item:hover {
   background: #585757;
 }
+
+/* ================= MAIN CHAT WINDOW ================= */
+.chatwindow {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #272626; /* unified background */
+  overflow: hidden;
+}
+
+/* ================= NAVBAR ================= */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 12px;
+  background-color: #0d1117;
+  border-bottom: 1px solid #30363d;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.username {
+  font-size: 14px;
+  color: white;
+}
+
+.userIconDiv {
+  cursor: pointer;
+  font-size: 18px;
+  background-color: #21262d;
+  padding: 8px 10px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.userIconDiv:hover {
+  background-color: #30363d;
+}
+
+.navbar .userIconDiv i {
+  color: white;
+}
+
+/* ================= CHAT AREA ================= */
+h1 {
+  text-align: center;
+  margin: 40px 0;
+}
+
+/* ================= LOADER ================= */
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ================= INPUT AREA ================= */
+.chatInput {
+  padding: 15px;
+  border-top: 1px solid #2a2a2a;
+  background-color: #272626;
+}
+
+.userInput {
+  position: relative;
+  width: 100%;
+  max-width: 750px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.userInput input {
+  width: 100%;
+  padding: 14px 50px 14px 16px; /* space for button */
+  border-radius: 30px;
+  border: 1px solid #30363d;
+  background-color: #1f1f1f;
+  color: white;
+  font-size: 15px;
+  outline: none;
+}
+
+.userInput input:focus {
+  box-shadow: 0 0 6px rgba(205, 206, 207, 0.4);
+}
+
+/* SEND BUTTON */
+.submitBtn {
+  position: absolute;
+  right: 8px;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background-color: #58a6ff;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s ease;
+}
+
+.submitBtn:hover {
+  background-color: #1f6feb;
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ================= FOOTER ================= */
+.chat-footer {
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  color: white;
+  padding: 5px 0;
+}
+
+.chat-footer a {
+  color: white;
+  text-decoration: underline;
+  margin-left: 4px;
+}
+
+/* ================= DROPDOWN ================= */
+.dropdown {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  background: #1e1e1e;
+  border-radius: 8px;
+  padding: 10px 0;
+  width: 200px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+  z-index: 1000;
+}
+
+.dropdown-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.dropdown-item:hover {
+  background: #585757;
+}
+
+/* Hamburger visible only on mobile */
+.hamburger {
+  display: none;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+  padding: 8px;
+}
+
+@media (max-width: 480px) {
+  .hamburger {
+    display: block;
+  }
+
+  .sidebar {
+    position: absolute;
+    left: -220px; /* hidden by default */
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+
+  .sidebar.open {
+    left: 0; /* slide in */
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 999;
+  }
+}
+
+.hamburger {
+  display: none;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+  padding: 8px;
+}
+
+@media (max-width: 480px) {
+  .hamburger {
+    display: block;
+  }
+
+  .sidebar {
+    position: absolute;
+    left: -220px; /* hidden by default */
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+
+  .sidebar.open {
+    left: 0; /* slide in */
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 999;
+  }
+}
+
+/* Hamburger only visible on mobile */
+.hamburger {
+  display: none;
+  cursor: pointer;
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    z-index: 1000;
+    background: #111;
+    color: white;
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+  }
+}
+
+/* Hamburger visible only on mobile */
+.hamburger {
+  display: none;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+  padding: 8px;
+}
+
+@media (max-width: 480px) {
+  .hamburger {
+    display: block;
+  }
+
+  .mobile-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100vh;
+    background: #171717;
+    z-index: 1000;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 999;
+  }
+}
+
