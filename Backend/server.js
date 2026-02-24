@@ -63,6 +63,7 @@ app.use("/api", chatRoutes);
 app.use("/api/auth", authRoutes);
 
 // -------------------- SERVE FRONTEND --------------------
+// -------------------- SERVE FRONTEND --------------------
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -71,9 +72,11 @@ const __dirname = path.dirname(__filename);
 if (process.env.NODE_ENV === "production") {
   const frontendPath = path.join(__dirname, "../frontend/dist");
 
+  // Serve static files
   app.use(express.static(frontendPath));
 
-  app.get("*", (req, res) => {
+  // Catch-all route for SPA
+  app.get("/*", (req, res) => {
     res.sendFile(path.join(frontendPath, "index.html"));
   });
 }
