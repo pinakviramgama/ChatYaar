@@ -76,6 +76,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // -------------------- DATABASE --------------------
+//DB connection successfully
 async function connectDB() {
   try {
     await mongoose.connect(process.env.MONGO_URL);
