@@ -14,8 +14,6 @@ const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
 // -------------------- MIDDLEWARE --------------------
 app.use(express.json());
-
-// If frontend + backend same domain, CORS not really needed
 app.use(cors());
 
 // -------------------- CHAT FUNCTION --------------------
@@ -37,7 +35,6 @@ async function getChatbotResponse(message) {
     );
 
     const data = await response.json();
-
     if (data?.error) {
       console.error("API Error:", data.error);
       return `API Error: ${data.error.message}`;
@@ -63,20 +60,17 @@ app.use("/api", chatRoutes);
 app.use("/api/auth", authRoutes);
 
 // -------------------- SERVE FRONTEND --------------------
-// -------------------- SERVE FRONTEND --------------------
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// IMPORTANT: Because Root Directory = Backend
-// frontend is one level up
 if (process.env.NODE_ENV === "production") {
   const frontendPath = path.join(__dirname, "../frontend/dist");
 
   // Serve static files
   app.use(express.static(frontendPath));
 
-  // Catch-all route for SPA
-  app.get("/*", (req, res) => {
+  // Catch-all route for SPA (works with current path-to-regexp)
+  app.get("/:path(*)", (req, res) => {
     res.sendFile(path.join(frontendPath, "index.html"));
   });
 }
