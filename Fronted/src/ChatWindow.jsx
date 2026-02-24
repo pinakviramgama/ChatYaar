@@ -23,6 +23,7 @@ function ChatWindow() {
   const inputRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const dropdownRef = useRef(null);
 
   // 🔹 Load user info from localStorage
   useEffect(() => {
@@ -83,20 +84,55 @@ function ChatWindow() {
     window.location.href = "/login";
   };
 
+  const [open, setOpen] = useState(false);
+const menuRef = useRef(null);
+
+useEffect(() => {
+  function handleClickOutside(e) {
+    if (menuRef.current && !menuRef.current.contains(e.target)) {
+      setOpen(false);
+    }
+  }
+
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => document.removeEventListener("mousedown", handleClickOutside);
+}, []);
+
+
+
   return (
     <div className="chatwindow">
-      <div className="navbar">
-        <span>ChatYaar <i className="fa-solid fa-chevron-down"></i></span>
 
-        <div className="profile-section">
-          {user && (
-            <span className="username">Logged in as <strong>{user.username}</strong></span>
-          )}
-          <div className="userIconDiv" onClick={handleProfileClick}>
-            <i className="fa-solid fa-user"></i>
-          </div>
-        </div>
+      <div className="navbar">
+
+  <div className="chat-menu" ref={menuRef}>
+    <span
+      className="chatYaar"
+      onClick={() => setOpen(prev => !prev)}
+    >
+      ChatYaar <i className="fa-solid fa-chevron-down"></i>
+    </span>
+
+    {open && (
+      <div className="dropdown">
+        <div className="dropdown-item">Upgrade to Plus &nbsp; <i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        <div className="dropdown-item">Settings &nbsp; <i class="fa-solid fa-gear"></i></div>
       </div>
+    )}
+  </div>
+
+  <div className="profile-section">
+    {user && (
+      <span className="fw-username">
+        Logged in as <strong>{user.username}</strong>
+      </span>
+    )}
+    <div className="userIconDiv" onClick={handleProfileClick}>
+      <i className="fa-solid fa-user"></i>
+    </div>
+  </div>
+
+</div>
 
       {newChat && <h1>START A NEW CHAT!</h1>}
 
@@ -118,40 +154,41 @@ function ChatWindow() {
       <SyncLoader className="loader" color="white" loading={loading} />
 
       <div className="chatInput">
-        <div className="userInput">
-          <input
-            ref={inputRef}
-            placeholder={loading ? "Receiving response..." : "Ask Anything"}
-            type="text"
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !loading) {
-                e.preventDefault();
-                getReply();
-              }
-            }}
-            disabled={loading}
-          />
-          <div
-            id="submit"
-            onClick={() => {
-              if (!loading) getReply();
-            }}
-            style={{ pointerEvents: loading ? "none" : "auto", opacity: loading ? 0.5 : 1 }}
-          >
-            {loading ? (
-              <i className="fa-solid fa-stop"></i>
-            ) : (
-              <i className="fa-solid fa-square-up-right"></i>
-            )}
-          </div>
-        </div>
+<div className="userInput">
+  <input
+    ref={inputRef}
+    placeholder={loading ? "Receiving response..." : "Ask Anything"}
+    type="text"
+    value={prompt}
+    onChange={(e) => setPrompt(e.target.value)}
+    onKeyDown={(e) => {
+      if (e.key === "Enter" && !loading) {
+        e.preventDefault();
+        getReply();
+      }
+    }}
+    disabled={loading}
+  />
+
+  <button
+    className="submitBtn"
+    onClick={() => {
+      if (!loading) getReply();
+    }}
+    disabled={loading}
+  >
+    {loading ? (
+      <i className="fa-solid fa-stop"></i>
+    ) : (
+      <i className="fa-solid fa-paper-plane"></i>
+    )}
+  </button>
+</div>
       </div>
 
-      <p>
-        ChatYaar can make mistakes. Check important info.{" "}
-        <a href="">See Cookie Preferences.</a>
+      <p className="chat-footer">
+        ChatYaar can make mistakes. Check important info.
+        <a href="#"> See Cookie Preferences.</a>
       </p>
     </div>
   );

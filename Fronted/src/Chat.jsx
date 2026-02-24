@@ -43,27 +43,36 @@ function Chat() {
   }, [prevChats, latestReply]);
 
   return (
-    <div className="chats">
+  <div className="chat-wrapper">
+    <div className="chat-messages">
       {prevChats.map((chat, idx) => (
-        <div key={idx} className={chat.role === "user" ? "userDiv" : "gptDiv"}>
-          <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
-            {chat.content}
-          </ReactMarkdown>
+        <div
+          key={idx}
+          className={chat.role === "user" ? "message user" : "message ai"}
+        >
+          <div className="bubble">
+            <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
+              {chat.content}
+            </ReactMarkdown>
+          </div>
         </div>
       ))}
 
-      {/* Currently typing AI message */}
+      {/* Typing AI */}
       {reply && latestReply && (
-        <div className="gptDiv">
-          <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
-            {latestReply}
-          </ReactMarkdown>
+        <div className="message ai">
+          <div className="bubble typing">
+            <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
+              {latestReply}
+            </ReactMarkdown>
+          </div>
         </div>
       )}
 
       <div ref={chatEndRef} />
     </div>
-  );
+  </div>
+);
 }
 
 export default Chat;

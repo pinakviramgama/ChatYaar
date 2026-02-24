@@ -1,0 +1,129 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+}
+
+.signup-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f6f9;
+}
+
+.signup-container {
+  width: 900px;
+  height: 550px;
+  display: flex;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+}
+
+.left-panel {
+  flex: 1;
+  background: #111827;
+  color: white;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.left-panel h1 {
+  font-size: 36px;
+  margin-bottom: 15px;
+}
+
+.left-panel p {
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+.right-panel {
+  flex: 1;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.right-panel h2 {
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+.right-panel form {
+  display: flex;
+  flex-direction: column;
+}
+
+.right-panel input {
+  margin-bottom: 18px;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.right-panel input:focus {
+  border-color: #2563eb;
+  outline: none;
+}
+
+.right-panel button {
+  padding: 12px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.right-panel button:hover {
+  background: #1e4ed8;
+}
+
+.signin-link {
+  margin-top: 18px;
+  font-size: 14px;
+}
+
+.signin-link a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.signin-link a:hover {
+  text-decoration: underline;
+}
+
+.error-box {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.right-panel input {
+  margin-bottom: 18px;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 18px;
+  color: #000;              /* FORCE BLACK TEXT */
+  background-color: #fff;   /* FORCE WHITE BACKGROUND */
+}
+
+.right-panel input::placeholder {
+  color: #888;
+}

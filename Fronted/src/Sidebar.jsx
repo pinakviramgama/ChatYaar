@@ -107,9 +107,12 @@ function Sidebar() {
         </span>
       </button>
 
-      <h3>Chats</h3>
+      <br />
+      <h4>Chat History</h4>
 
       <ul className="history">
+
+        {allthreads.length === 0 && <li>No Chats yet!</li>}
         {allthreads?.map((thread, idx) => (
           <li
             key={idx}
@@ -131,7 +134,7 @@ function Sidebar() {
       </ul>
 
       <div className="sign">
-        <p>By PV ♥</p>
+        <p>By PV &#10084;</p>
       </div>
     </section>
   );

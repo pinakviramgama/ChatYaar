@@ -1,156 +1,28 @@
+/* ================= MAIN CHAT WINDOW ================= */
+
 .chatwindow {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    background-color: rgb(39, 38, 38);
-    position: relative;
-    margin-left: 320px;
-    height: 100vh;
-    overflow-y: hidden;
-
-}
-
-.chatInput {
+  flex: 1;
   display: flex;
-  justify-content: center;
-  padding: 15px;
-  margin-top: 450px;
+  flex-direction: column;
+  height: 100vh;
   background-color: rgb(39, 38, 38);
-  max-width: 1700px;
+  position: relative;
+  overflow: hidden;
+  overflow-y: hidden;
 }
 
-
-.userInput {
-  width: 750px;
-  display: flex;
-  justify-content: center;
-  background-color: rgb(39, 38, 38);
-}
-
-.userInput #submit {
-    height: 32px;
-    width: 32px;
-    display: flex;           /* use flex to center content */
-    align-items: center;     /* vertical center */
-    justify-content: center; /* horizontal center */
-    padding: 0;              /* remove default padding */
-    border: none;            /* optional: remove border */
-    background-color: white; /* example color */
-    border-radius: 50%;      /* optional: make it circular */
-}
-
-.userInput #submit {
-    left: -41px;
-    position: relative;
-    top: 7px; /* push it 4px lower; increase value to move more down */
-    height: 35px;
-    width: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-
-
-.userInput #submit i {
-    margin: 0;               /* no manual shifting needed */
-    font-size: 16px;         /* adjust icon size */
-}
-
-.userInput input {
-  width: 100%;
-  height: 23px;
-  border-radius: 17px;
-  padding: 12px;
-  background-color: rgb(63, 63, 63);
-  color: white;
-  font-size: 16px;
-   outline: none;       /* remove focus outline */
-  box-shadow: none;
-}
-
-.navbar {
-    padding: 2px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 50px;
-    background-color: rgb(39, 38, 38);
-    position: sticky;
-    top: 0;
-    z-index: 1;
-}
-
-.navbar .userIconDiv {
-    background-color: blue;
-    align-items: center;
-    height: 35px;
-    width: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center ;
-    gap: 4px;
-    border-radius: 50%;
-    margin-right: 8px;
-}
-
-.navbar .userIconDiv i {
-    border-radius: 50%;
-    background-color: blue;
-    font-size: 22px;
-    cursor: pointer;
-}
-
-span {
-    display: inline-flex;
-    align-items: center;    /* vertically center */
-    gap: 4px;               /* optional spacing between text and icon */
-}
-
-a {
-    color: white;
-}
-
-.loader {
-  position: fixed;      /* stays in place */
-  top: 43%;
-  left: 56%;
-  transform: translate(-50%, -50%);
-  background-color: rgb(39, 38, 38);
-}
-
-.dropDown {
-    position: absolute;
-    margin-top: 55px;
-    margin-right: -1050px;
-    background-color: #323232;
-    box-shadow: rgba(0, 0, 0, 0.1);
-    padding: 5px;
-    border-radius: 5px;
-    z-index: 1000;
-}
-
-.dropDown .dropDownItem {
-    margin: 8px;
-    background-color: #323232;
-}
-
-.dropDown .dropDownItem:hover {
-    color: beige;
-    cursor: pointer;
-}
+/* ================= NAVBAR ================= */
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 20px;
-  background-color: #161b22;
+  padding: 7px;
+  background-color: #0d1117;
   border-bottom: 1px solid #30363d;
-  color: #f0f6fc;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .profile-section {
@@ -161,7 +33,7 @@ a {
 
 .username {
   font-size: 14px;
-  color: #8b949e;
+  color:white;
 }
 
 .userIconDiv {
@@ -177,29 +49,204 @@ a {
   background-color: #30363d;
 }
 
-.navbar {
+.navbar .userIconDiv i {
+  color: white;
+}
+
+/* ================= CHAT AREA ================= */
+
+h1 {
+  text-align: center;
+  margin: 40px 0;
+}
+
+/* ================= LOADER ================= */
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ================= INPUT AREA ================= */
+
+.chatInput {
+  padding: 20px;
+  border-top: 1px solid #2a2a2a;
+  background-color: rgb(39, 38, 38);
+}
+
+.userInput {
+  max-width: 750px;
+  margin: 0 auto;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background-color: #0d1117;
-  padding: 10px 20px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  width: 100%; /* 🧠 subtract sidebar width */
-  margin-left: 10px; /* 🧠 align perfectly with sidebar */
-  box-sizing: border-box;
+  position: relative;
+}
+
+.userInput input {
+  width: 100%;
+  border-radius: 25px;
+  padding: 14px 50px 14px 18px;
+  background-color: rgb(63, 63, 63);
+  color: white;
+  font-size: 16px;
+  border: none;
+  outline: none;
+}
+
+/* SEND BUTTON */
+
+.userInput #submit {
+  position: absolute;
+  right: 10px;
+  height: 36px;
+  width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.userInput #submit i {
+  font-size: 16px;
+}
+
+/* ================= DROPDOWN ================= */
+
+.dropDown {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background-color: #323232;
+  padding: 10px;
+  border-radius: 6px;
+  z-index: 1000;
+  min-width: 150px;
+}
+
+.dropDownItem {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropDownItem:hover {
+  color: beige;
 }
 
 .chatwindow {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    background-color: rgb(39, 38, 38);
-    position: relative;
-    margin-left: 320px;
-    height: 100vh;
-    overflow: hidden; /* 🚫 disables both x and y scroll */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #272626;
+  overflow: hidden;
+}
+
+.chat-footer {
+  width: 100%;
+  text-align: center;      /* centers text */
+  font-size: 13px;
+  color: white;
+  padding: 5px 0 5px 0;
+}
+
+.chat-footer a {
+  color: white;
+  text-decoration: none;
+  margin-left: 4px;
+  text-decoration: underline;
+}
+
+.chat-footer a:hover {
+  text-decoration: underline;
+}
+
+.userInput {
+  position: relative;
+  width: 100%;
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.userInput input {
+  width: 100%;
+  padding: 14px 50px 14px 16px; /* right padding for button */
+  border-radius: 30px;
+  border: 1px solid #30363d;
+  background-color: #1f1f1f;
+  color: white;
+  font-size: 15px;
+  outline: none;
+}
+
+.userInput input:focus {
+  box-shadow: 0 0 6px rgba(205, 206, 207, 0.4);
+}
+
+.submitBtn {
+  position: absolute;
+  right: 8px;
+  top: 40%;
+  transform: translateY(-50%);
+
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+
+  background-color: #58a6ff;
+  color: white;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.2s ease;
+}
+
+.submitBtn:hover {
+  background-color: #1f6feb;
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.chatYaar:hover {
+  background-color: #72767a;
+  padding: 5px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.navbar {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  background: #1e1e1e;
+  border-radius: 8px;
+  padding: 10px 0;
+  width: 200px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+  z-index: 1000;
+}
+
+.dropdown-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.dropdown-item:hover {
+  background: #585757;
 }

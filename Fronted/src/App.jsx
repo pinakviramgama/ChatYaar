@@ -15,7 +15,6 @@ function App() {
   const [prevChats, setPrevChats] = useState([]);
   const [newChat, setNewChat] = useState(true);
   const [allthreads, setAllThreads] = useState([]);
-
   const [user, setUser] = useState(() => JSON.parse(localStorage.getItem("user")));
 
   const provideValues = {
@@ -33,7 +32,6 @@ function App() {
     setAllThreads,
   };
 
-  // 🔥 Re-check user whenever localStorage changes
   useEffect(() => {
     const handleStorageChange = () => {
       setUser(JSON.parse(localStorage.getItem("user")));
@@ -44,27 +42,49 @@ function App() {
 
   return (
     <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route
-          path="/chat"
-          element={
-            user ? (
-              <div className="main">
-                <MyContext.Provider value={provideValues}>
-                  <Sidebar />
-                  <ChatWindow />
-                </MyContext.Provider>
-              </div>
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-        <Route path="*" element={<Navigate to={user ? "/chat" : "/login"} />} />
-      </Routes>
-    </Router>
+  <Routes>
+
+    {/* 🔒 Prevent logged-in users from accessing login */}
+    <Route
+      path="/login"
+      element={
+        user ? <Navigate to="/chat" replace /> : <Login setUser={setUser} />
+      }
+    />
+
+    {/* 🔒 Prevent logged-in users from accessing signup */}
+    <Route
+      path="/signup"
+      element={
+        user ? <Navigate to="/chat" replace /> : <Signup />
+      }
+    />
+
+    {/* 🔒 Protect chat route */}
+    <Route
+      path="/chat"
+      element={
+        user ? (
+          <div className="main">
+            <MyContext.Provider value={provideValues}>
+              <Sidebar />
+              <ChatWindow />
+            </MyContext.Provider>
+          </div>
+        ) : (
+          <Navigate to="/login" replace />
+        )
+      }
+    />
+
+    {/* Default redirect */}
+    <Route
+      path="*"
+      element={<Navigate to={user ? "/chat" : "/login"} replace />}
+    />
+
+  </Routes>
+</Router>
   );
 }
 
