@@ -15,6 +15,7 @@ function Sidebar() {
     setPrevChats,
   } = useContext(MyContext);
 
+  const API = process.env.VITE_URL;
   // 🟢 Get the logged-in user from localStorage
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -24,7 +25,7 @@ function Sidebar() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/thread/${user._id}`
+        `${API}/api/thread/${user._id}`
       );
       const data = await response.json();
 
@@ -59,7 +60,7 @@ function Sidebar() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/thread/${user._id}/${newThreadId}`
+        `${API}/api/thread/${user._id}/${newThreadId}`
       );
       const data = await response.json();
 
@@ -76,7 +77,7 @@ function Sidebar() {
   const deleteThread = async (threadId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/thread/${user._id}/${threadId}/delete`,
+        `${API}/api/thread/${user._id}/${threadId}/delete`,
         { method: "DELETE" }
       );
 

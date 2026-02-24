@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Signup.css";
 
 function Signup() {
+  const API = process.env.VITE_URL;
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -20,7 +21,7 @@ function Signup() {
     setMessage("");
 
     try {
-      const res = await fetch("http://localhost:3000/api/auth/signup", {
+      const res = await fetch(`${API}/api/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

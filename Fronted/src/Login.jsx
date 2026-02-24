@@ -7,13 +7,14 @@ function Login({ setUser }) {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
+  const API = process.env.VITE_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
 
     try {
       //https://chatyaar-4.onrender.com/login
-      const res = await fetch("https://chatyaar-4.onrender.com/api/auth/login", {
+      const res = await fetch(`${API}https://chatyaar-4.onrender.com/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

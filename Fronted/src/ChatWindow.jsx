@@ -44,9 +44,10 @@ function ChatWindow() {
 
     let threadId = currThreadId;
 
+    const API = process.env.VITE_URL;
     // Step 1: Create thread if not exists
     if (!threadId) {
-      const res = await fetch("http://localhost:3000/api/thread", {
+      const res = await fetch(`${API}/api/thread`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title: "New Chat" }),
@@ -63,7 +64,7 @@ function ChatWindow() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/api/chat", {
+      const response = await fetch(`${API}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: prompt, threadId ,userId:user?._id,}),
