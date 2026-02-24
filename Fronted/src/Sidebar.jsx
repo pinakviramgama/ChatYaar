@@ -90,25 +90,28 @@ function Sidebar({ className }) {
       </button>
 
       <h4>Chat History</h4>
-      <ul className="history">
-        {allthreads.length === 0 && <li>No Chats yet!</li>}
-        {allthreads?.map((thread, idx) => (
-          <li
-            key={idx}
-            className={`history-item ${currThreadId === thread.threadId ? "active-thread" : ""}`}
-            onClick={() => changeThread(thread.threadId)}
-          >
-            <span>{thread.title}</span>
-            <i
-              className="fa-solid fa-trash"
-              onClick={(e) => {
-                e.stopPropagation();
-                deleteThread(thread.threadId);
-              }}
-            ></i>
-          </li>
-        ))}
-      </ul>
+<ul className="history">
+  {allthreads.length === 0 && <li>No Chats yet!</li>}
+  {allthreads?.map((thread, idx) => (
+    <>
+      <li
+        key={idx}
+        className={`history-item ${currThreadId === thread.threadId ? "active-thread" : ""}`}
+        onClick={() => changeThread(thread.threadId)}
+      >
+        <span>{thread.title}</span>
+        <i
+          className="fa-solid fa-trash"
+          onClick={(e) => {
+            e.stopPropagation();
+            deleteThread(thread.threadId);
+          }}
+        ></i>
+      </li>
+      <hr className="history-divider" />
+    </>
+  ))}
+</ul>
 
       <div className="sign">
         <p>By PV &#10084;</p>

@@ -236,3 +236,8 @@ button:hover {
     z-index: 1000; /* Below sidebar */
   }
 }
+
+.history-item.active-thread {
+  background-color: #444;
+  font-weight: bold;
+}
