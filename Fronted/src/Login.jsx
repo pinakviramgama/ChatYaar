@@ -14,7 +14,7 @@ function Login({ setUser }) {
 
     try {
       //https://chatyaar-4.onrender.com/login
-      const res = await fetch(`${API}https://chatyaar-4.onrender.com/api/auth/login`, {
+      const res = await fetch(`${API}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

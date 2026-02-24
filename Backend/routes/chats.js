@@ -5,7 +5,21 @@ import getChatbotResponse from "../utils/openai.js";
 
 const router = express.Router();
 
-// Get all threads for a user
+// ✅ Get all threads for a user (frontend can call /api/threads?userId=123)
+router.get("/threads", async (req, res) => {
+  const { userId } = req.query;
+  if (!userId) return res.status(400).json({ error: "userId required" });
+
+  try {
+    const threads = await Thread.find({ userId }).sort({ updatedAt: -1 });
+    res.json(threads);
+  } catch (err) {
+    console.error("Error fetching threads:", err.message);
+    res.status(500).json({ error: "Failed to get threads" });
+  }
+});
+
+// ✅ Get all threads for a user (alternate path /api/thread/:userId)
 router.get("/thread/:userId", async (req, res) => {
   const { userId } = req.params;
   try {
@@ -17,7 +31,7 @@ router.get("/thread/:userId", async (req, res) => {
   }
 });
 
-// Get thread by ID
+// ✅ Get thread by ID
 router.get("/thread/:userId/:threadId", async (req, res) => {
   const { userId, threadId } = req.params;
   try {
@@ -25,11 +39,12 @@ router.get("/thread/:userId/:threadId", async (req, res) => {
     if (!thread) return res.status(404).json({ error: "Thread not found" });
     res.json(thread.messages);
   } catch (err) {
+    console.error("Error fetching thread:", err.message);
     res.status(500).json({ error: "Failed to fetch thread" });
   }
 });
 
-// Delete thread
+// ✅ Delete thread
 router.delete("/thread/:userId/:threadId/delete", async (req, res) => {
   const { userId, threadId } = req.params;
   try {
@@ -37,14 +52,16 @@ router.delete("/thread/:userId/:threadId/delete", async (req, res) => {
     if (!deleted) return res.status(404).json({ message: "Thread not found" });
     res.json({ success: true });
   } catch (err) {
+    console.error("Error deleting thread:", err.message);
     res.status(500).json({ error: "Failed to delete thread" });
   }
 });
 
-// Send chat message
+// ✅ Send chat message
 router.post("/chat", async (req, res) => {
   let { threadId, message, userId } = req.body;
   if (!userId) return res.status(400).json({ error: "userId required" });
+  if (!message) return res.status(400).json({ error: "message required" });
 
   if (!threadId) threadId = uuidv4();
 

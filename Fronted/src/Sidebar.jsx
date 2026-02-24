@@ -15,7 +15,7 @@ function Sidebar() {
     setPrevChats,
   } = useContext(MyContext);
 
-  const API = process.env.VITE_URL;
+  const API = import.meta.env.VITE_URL;
   // 🟢 Get the logged-in user from localStorage
   const user = JSON.parse(localStorage.getItem("user"));
 
