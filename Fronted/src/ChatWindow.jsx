@@ -66,13 +66,14 @@ function ChatWindow() {
     try {
       console.log(API);
 
-      const response = await fetch(`${API}/api/chat`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: prompt, threadId ,userId:user?._id,}),
-      });
-      const res = await response.json();
-      setReply(res.reply);
+const response = await fetch(`${API}/api/chat`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ message: prompt, threadId, userId: user?._id }),
+});
+const res = await response.json();
+setReply(res.reply);
+
     } catch (err) {
       console.log(err.message);
     }

@@ -57,6 +57,27 @@ router.delete("/thread/:userId/:threadId/delete", async (req, res) => {
   }
 });
 
+// Create a new thread explicitly
+router.post("/thread", async (req, res) => {
+  const { userId, title } = req.body;
+  if (!userId) return res.status(400).json({ error: "userId required" });
+
+  try {
+    const threadId = uuidv4();
+    const thread = new Thread({
+      threadId,
+      userId,
+      title: title || "New Chat",
+      messages: [],
+    });
+    await thread.save();
+    res.json({ threadId, title: thread.title });
+  } catch (err) {
+    console.error("Error creating thread:", err.message);
+    res.status(500).json({ error: "Failed to create thread" });
+  }
+});
+
 // ✅ Send chat message
 router.post("/chat", async (req, res) => {
   let { threadId, message, userId } = req.body;
