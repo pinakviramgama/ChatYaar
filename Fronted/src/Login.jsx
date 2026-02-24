@@ -7,7 +7,7 @@ function Login({ setUser }) {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  const API = process.env.VITE_URL;
+  const API = process.env.VITE_API_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");

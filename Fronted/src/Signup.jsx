@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Signup.css";
 
 function Signup() {
-  const API = process.env.VITE_URL;
+  const API = process.env.VITE_API_URL;
   const [formData, setFormData] = useState({
     username: "",
     email: "",

@@ -44,7 +44,7 @@ function ChatWindow() {
 
     let threadId = currThreadId;
 
-  const API = import.meta.env.VITE_URL
+  const API = import.meta.env.VITE_API_URL
     // Step 1: Create thread if not exists
     if (!threadId) {
       const res = await fetch(`${API}/api/thread`, {
