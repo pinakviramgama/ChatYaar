@@ -35,6 +35,7 @@ async function getChatbotResponse(message) {
     );
 
     const data = await response.json();
+
     if (data?.error) {
       console.error("API Error:", data.error);
       return `API Error: ${data.error.message}`;
@@ -66,11 +67,10 @@ const __dirname = path.dirname(__filename);
 if (process.env.NODE_ENV === "production") {
   const frontendPath = path.join(__dirname, "../frontend/dist");
 
-  // Serve static files
   app.use(express.static(frontendPath));
 
-  // Catch-all route for SPA (works with current path-to-regexp)
-  app.get("/:path(*)", (req, res) => {
+  // ✅ FIXED: use regex catch-all
+  app.get(/.*/, (req, res) => {
     res.sendFile(path.join(frontendPath, "index.html"));
   });
 }

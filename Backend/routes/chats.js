@@ -2,7 +2,8 @@ import express from "express";
 import { v4 as uuidv4 } from "uuid";
 import Thread from "../models/Thread.js";
 import getChatbotResponse from "../utils/openai.js";
-const router = express.Router(); // 🟢 use Router instead of express()
+
+const router = express.Router();
 
 // Get all threads for a user
 router.get("/thread/:userId", async (req, res) => {
@@ -11,7 +12,7 @@ router.get("/thread/:userId", async (req, res) => {
     const threads = await Thread.find({ userId }).sort({ updatedAt: -1 });
     res.json(threads);
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
     res.status(500).json({ error: "Failed to get threads" });
   }
 });
